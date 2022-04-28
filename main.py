@@ -15,7 +15,11 @@ FILE_DIR = os.path.join(DATA_DIR, "apache_logs.txt")
 @app.route("/perform_query")
 def perform_query():
     try:
-        cmd_list = list(parse_request(request.args))
+        if 'query' not in request.args:
+            return 'BAD request', 400
+
+        cmd_list = list(parse_request(request.args.get('query')))
+
         if len(cmd_list) == 0:
             return 'BAD request', 400
 

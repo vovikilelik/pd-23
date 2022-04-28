@@ -4,21 +4,17 @@ METHODS_MAP = {
     'filter': lambda arg: lambda iterable: search_by_text(iterable, arg),
     'map': lambda arg: lambda iterable: get_column(iterable, int(arg)),
     'unique': lambda arg: lambda iterable: unique(iterable),
-    'sort': lambda arg: lambda iterable: sort_text(iterable, bool(arg)),
+    'sort': lambda arg: lambda iterable: sort_text(iterable, arg),
     'limit': lambda arg: lambda iterable: limit(iterable, int(arg))
 }
 
 
-def read_value(data, name):
-    if name in data:
-        return data[name]
+def parse_request(query_string):
+    cmd_list = query_string.split('|')
 
-
-def parse_request(data):
-    inc = 1
-    while f'cmd{inc}' in data:
-        yield data[f'cmd{inc}'], read_value(data, f'value{inc}')
-        inc += 1
+    for e in cmd_list:
+        cmd = e.split(':')
+        yield cmd[0], cmd[1] if len(cmd) > 1 else None
 
 
 def get_method(method):

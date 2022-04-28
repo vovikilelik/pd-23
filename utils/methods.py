@@ -24,5 +24,6 @@ def get_column(iterable, column_index):
     return map(lambda e: extract_column(e, column_index), iterable)
 
 
-def sort_text(iterable, reverse):
+def sort_text(iterable, direction):
+    reverse = direction == 'desc'
     return sorted(iterable, reverse=reverse)
