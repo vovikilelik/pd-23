@@ -40,4 +40,4 @@ def perform_query_post():
     return perform_query(parse_request_legacy(request.form), request.form.get('file_name'))
 
 
-app.run(debug=True)
+app.run(debug=True, host='0.0.0.0', port=8080)
